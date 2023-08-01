@@ -1,0 +1,46 @@
+/* eslint-disable */
+var files = 'app~21833f8f.33d58a7e694648818c97.js,app~748942c6.0a3f69c81369b74d48dc.js,styles~21833f8f.c76986494dadce2de6f4.js,vendors~0f485567.455b8703b457bc5214db.js,vendors~253ae210.aa337345abc7f265d39f.js,vendors~7274e1de.2007ccdf5c054a58d39f.js,vendors~7662c92f.f50fb8c2b6e8f620fdac.js,vendors~8004e7d2.1813982a8e8c28785536.js,vendors~c8728516.b0cc93504a4367000c93.js,vendors~cefe50a8.65c31bbda03b8465ff18.js,vendors~db300d2f.0038bb1d9803ba9d3e74.js,vendors~ec8c427e.007cb682abee6376a9b0.js,vendors~f9ca8911.9c62106900ca71c93f75.js,styles~21833f8f.2b380b22ceab3d5e53dc.css'
+var isFromLocal = false
+var buildTime = 'Wed Feb 24 2021 22:45:38 GMT+0800 (+08)'
+var buildEnv = 'live'
+var buildRegion = 'my'
+var host = window.location.href
+var isVisitingCN = host.indexOf('cn') > -1
+var cdnDomain = !!isFromLocal
+  ? ''
+  : isVisitingCN
+    ? 'https://deo.shopeesz.com/shopee/shopee-seller-' + buildEnv + '-' + buildRegion
+    : 'https://deo.shopeemobile.com/shopee/shopee-seller-' + buildEnv + '-' + buildRegion
+/* eslint-enable */
+function createAssetScriptTags (fileNames) {
+  console.log('MiniChat Build Time: ', buildTime)
+  var files = fileNames.split(',')
+  var fileLength = files.length
+  var fragment = document.createDocumentFragment()
+  if (fileLength) {
+    for (var i = 0; i < fileLength; i++) {
+      var jsFile = files[i].indexOf('js') > -1
+      var cssFile = files[i].indexOf('css') > -1
+      var fileUrl = cdnDomain + '/chateasy/' + files[i]
+      if (jsFile) {
+        var jstag = document.createElement('script')
+        jstag.src = fileUrl
+        jstag.type = 'text/javascript'
+        jstag.charset = 'utf-8'
+        if (jstag) {
+          fragment.appendChild(jstag)
+        }
+      } else if (cssFile) {
+        var csstag = document.createElement('link')
+        csstag.href = fileUrl
+        csstag.rel = 'stylesheet'
+        csstag.type = 'text/css'
+        if (csstag) {
+          fragment.appendChild(csstag)
+        }
+      }
+    }
+    document.body.appendChild(fragment)
+  }
+}
+createAssetScriptTags(files)

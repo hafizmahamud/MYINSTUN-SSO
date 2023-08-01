@@ -1,0 +1,44 @@
+var files = 'static/js/main.a3fe5926.chunk.js,static/js/runtime-main.a5c4ff56.js,static/js/2.ce930a93.chunk.js,static/css/main.d3ec501b.chunk.css,static/css/2.ac5e7e78.chunk.css'
+var buildTime = 'Thu Feb 04 2021 20:45:48 GMT+0800 (Singapore Standard Time)'
+var buildEnv = 'live'
+var buildRegion = 'my'
+var host = window.location.href
+var isVisitingMall = host.indexOf('seller') === -1
+var isVisitingCN = host.indexOf('cn') > -1
+var cdnDomain = isVisitingCN
+  ? 'https://deo.shopeesz.com/shopee/shopee-cschat-' + buildEnv + '-' + buildRegion + '/'
+  : 'https://deo.shopeemobile.com/shopee/shopee-cschat-' + buildEnv + '-' + buildRegion + '/'
+function createAssetScriptTags (fileNames) {
+  window.csChatLoadFileStart = Date.now();
+  console.log('CsChat Build Time: ', buildTime)
+  var files = fileNames.split(',')
+  var fileLength = files.length
+  var fragment = document.createDocumentFragment()
+  if (fileLength) {
+    for (var i = 0; i < fileLength; i++) {
+      var jsFile = files[i].indexOf('js') > -1
+      var cssFile = files[i].indexOf('css') > -1
+      var fileUrl = cdnDomain + files[i]
+      if (jsFile) {
+        var jstag = document.createElement('script')
+        jstag.src = fileUrl
+        jstag.type = 'text/javascript'
+        jstag.charset = 'utf-8'
+        if (jstag) {
+          fragment.appendChild(jstag)
+        }
+      } else if (cssFile) {
+        var csstag = document.createElement('link')
+        csstag.href = fileUrl
+        csstag.rel = 'stylesheet'
+        csstag.type = 'text/css'
+        if (csstag) {
+          fragment.appendChild(csstag)
+        }
+      }
+    }
+    document.body.appendChild(fragment)
+  }
+}
+// Load static resources
+createAssetScriptTags(files)
